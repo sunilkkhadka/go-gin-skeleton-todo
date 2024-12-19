@@ -3,6 +3,7 @@ package router
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"boilerplate-api/lib/config"
 
@@ -45,16 +46,14 @@ func NewRouter(env config.Env, logger config.Logger) Router {
 
 	httpRouter := gin.Default()
 
-	httpRouter.Use(
-		cors.New(
-			cors.Config{
-				AllowOrigins:     []string{"*"},
-				AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "OPTIONS", "DELETE"},
-				AllowHeaders:     []string{"*"},
-				AllowCredentials: true,
-			},
-		),
-	)
+	httpRouter.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 
 	httpRouter.Use(
 		sentrygin.New(

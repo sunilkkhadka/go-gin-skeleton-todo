@@ -4,7 +4,9 @@ import (
 	"boilerplate-api/api/admin"
 	"boilerplate-api/api/auth"
 	"boilerplate-api/api/swagger"
+	"boilerplate-api/api/todo"
 	"boilerplate-api/api/user"
+
 	"go.uber.org/fx"
 )
 
@@ -15,5 +17,6 @@ var Module = fx.Module(
 		admin.Module,
 		user.Module,
 		auth.Module,
+		todo.Module,
 	),
 )
